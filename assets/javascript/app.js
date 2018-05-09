@@ -33,6 +33,16 @@ var game = {
         "Battle Pus" 
     ],
 
+    explanation: [
+        "So unstable that even strong sunlight can set it ablaze, Wildfire is an extremely volatile substance that can only be extinguished with copious amounts of sand.",
+    ],
+
+
+    displayAnswer: function() {
+        $( "#explanation" ).show();
+        $( "#answer" ).css( "border", "1.5pt solid green" );
+    },
+
 
     loadQuestion: function() {
         $( "#question" ).text( this.questions[ this.currQuestion ] );
@@ -41,14 +51,22 @@ var game = {
         var currSet = this.answerSets[ this.currQuestion ];
         var setLen = this.answerSets[ this.currQuestion ].length;   // get the number of answers in the answer set
 
-        var $ul = $( "<ul>" );
-        $ul.addClass( "list-group" );
+        var answerIndex = currSet.indexOf( this.answers[this.currQuestion] );   // find answer to add explanation
+
+        var $ul = $( "<ul>" ).addClass( "list-group" );
 
         for( var i = 0 ; i < setLen ; i++ ) {
-            var $li = $( "<li>" );
-            $li.addClass( "list-group-item" );
-            $li.text( currSet[i] );
-            $ul.append( $li );
+            var $div = $( "<div>" ).addClass( "list-group-item" );
+            var $h4 = $( "<h4>" ).text( currSet[i] );
+            $div.append( $h4 );
+
+            if( i === answerIndex ) {
+                var $p = $( "<p>" ).attr( "id", "explanation" ).text( this.explanation[this.currQuestion] ).hide();
+                $div.attr( "id", "answer" );
+                $div.append( $p );
+            }
+
+            $ul.append( $div );
         }
 
         $( "#answers" ).append( $ul );
@@ -96,9 +114,11 @@ var timer = {
         clearInterval( intervalId );
         running = false;
         
-        var $timeUp = $( "h4" );
+        var $timeUp = $( "<h4>" );
         $timeUp.text( "Time's up!" );
         $( "#time" ).append( $timeUp );
+
+        game.displayAnswer();
     },
 };
 
