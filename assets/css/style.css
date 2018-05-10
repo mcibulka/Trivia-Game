@@ -23,3 +23,9 @@ body {
     height: 60px; /* Set the fixed height of the footer here */
     line-height: 60px; /* Vertically center the text there */
 }
+
+
+/* Classes */
+.choice:hover {
+    background-color: rgba(255, 102, 0, 0.75);
+}

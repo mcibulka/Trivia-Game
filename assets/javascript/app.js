@@ -1,5 +1,6 @@
 window.onload = function() {
     $( "#start" ).click( timer.start );
+    $( "#answers" ).click( game.checkAnswer );
 };
 
 
@@ -70,13 +71,16 @@ var game = {
         var $ul = $( "<ul>" ).addClass( "list-group" );
 
         for( var i = 0 ; i < setLen ; i++ ) {
-            var $div = $( "<div>" ).addClass( "list-group-item" );
+            var $div = $( "<div>" ).addClass( "list-group-item choice" );
+            $div.attr( "data-answer", currSet[i] );
+            
             var $h4 = $( "<h4>" ).text( currSet[i] );
             $div.append( $h4 );
 
             if( i === answerIndex ) {
                 var $p = $( "<p>" ).attr( "id", "explanation" ).text( this.explanation[this.currQuestion] ).hide();
                 $div.attr( "id", "answer" );
+                
                 $div.append( $p );
             }
 
@@ -97,10 +101,14 @@ var game = {
         else {
             console.log( "END" );
         }
+    },
+
+
+    checkAnswer: function() {
+        var answer = $(this).attr("data-answer");
+        console.log(this);
     }
 };
-
-
 
 
 // The timer object keeps track of remaining time in each round
@@ -152,4 +160,5 @@ var timer = {
         setTimeout( game.nextQuestion, 10000 );
     },
 };
+
 
