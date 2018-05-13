@@ -1,6 +1,6 @@
 window.onload = function() {
     $( "#start" ).click( timer.start );
-    $( "#answers" ).click( game.checkAnswer );
+    $( "#answers" ).on( "click", ".list-group-item", game.checkAnswer );
 };
 
 
@@ -105,8 +105,11 @@ var game = {
 
 
     checkAnswer: function() {
-        var answer = $(this).attr("data-answer");
-        console.log(this);
+        var $answer = $(this).attr("data-answer");
+        
+        if( $answer === game.answers[game.currQuestion] ) {
+            console.log( "win!" );
+        }
     }
 };
 
