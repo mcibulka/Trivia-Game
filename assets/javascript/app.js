@@ -7,6 +7,7 @@ window.onload = function() {
 // Gobal Variables
 var intervalId;
 var running = false;
+var score = 0;
 
 
 var game = {
@@ -34,7 +35,7 @@ var game = {
     
     answers: [
         "Sand",
-        "Battle Pus",
+        "Ser Pounce",
         "Ice",
         "Bronn",
         "Knowledge of Poisons",
@@ -108,7 +109,11 @@ var game = {
         var $answer = $(this).attr("data-answer");
         
         if( $answer === game.answers[game.currQuestion] ) {
-            console.log( "win!" );
+            // timer.stop();
+            game.displayAnswer();
+            score++;
+
+            $( "#player-score").text( "Score: " + score );
         }
     }
 };
@@ -121,7 +126,7 @@ var timer = {
 
     count: function() {
         timer.remaining--;
-        $( "#time-remaining " ).text( "Time Remaining: " + timer.remaining );
+        $( "#time-remaining" ).text( "Time Remaining: " + timer.remaining );
 
         if( timer.remaining === 0 ) {
             timer.timesUp();
@@ -132,9 +137,12 @@ var timer = {
     start: function() {
         $( "#start" ).hide();
         $( "#time" ).empty();
+        $( "#score" ).empty();
 
         var $timeRem = $( "<h4>" ).attr( "id", "time-remaining" ).text( "Time Remaining: 10" );
+        var $playerScore = $( "<h4>" ).attr( "id", "player-score" ).text( "Score: " + score );
         $( "#time" ).append( $timeRem );
+        $( "#score" ).append( $playerScore );
 
         if (!running) {
             intervalId = setInterval( timer.count, 1000 );
