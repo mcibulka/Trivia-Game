@@ -109,11 +109,16 @@ var game = {
         var $answer = $(this).attr("data-answer");
         
         if( $answer === game.answers[game.currQuestion] ) {
-            // timer.stop();
             game.displayAnswer();
             score++;
 
+            $( "#message" ).text( "Correct!" );
+            $( "#message" ).css( "color", "black" );
             $( "#player-score").text( "Score: " + score );
+        }
+        else {
+            $( "#message" ).text( "Incorrect." );
+            $( "#message" ).css( "color", "black" );
         }
     }
 };
@@ -139,6 +144,7 @@ var timer = {
         $( "#remaining" ).empty();
         $( "#time" ).empty();
         $( "#score" ).empty();
+        $( "#message" ).css( "color", "white" );
 
         var $remainder = $( "<h4>" ).attr( "id", "remaining" ).text( (game.currQuestion + 1) + " / " + game.questions.length );
         var $timeRem = $( "<h4>" ).attr( "id", "time-remaining" ).text( "Time Remaining: 10" );
@@ -167,8 +173,8 @@ var timer = {
         running = false;
         timer.remaining = 10;
 
-        var $timeUp = $( "<h4>" ).text( "Time's up!" );
-        $( "#time" ).append( $timeUp );
+        $( "#message" ).text( "Time's up!" );
+        $( "#message" ).css( "color", "black" );
 
         game.displayAnswer();
         setTimeout( game.nextQuestion, 10000 );
