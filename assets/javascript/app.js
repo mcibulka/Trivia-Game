@@ -136,13 +136,16 @@ var timer = {
 
     start: function() {
         $( "#start" ).hide();
+        $( "#remaining" ).empty();
         $( "#time" ).empty();
         $( "#score" ).empty();
 
+        var $remainder = $( "<h4>" ).attr( "id", "remaining" ).text( (game.currQuestion + 1) + " / " + game.questions.length );
         var $timeRem = $( "<h4>" ).attr( "id", "time-remaining" ).text( "Time Remaining: 10" );
         var $playerScore = $( "<h4>" ).attr( "id", "player-score" ).text( "Score: " + score );
         $( "#time" ).append( $timeRem );
         $( "#score" ).append( $playerScore );
+        $( "#remaining" ).append( $remainder );
 
         if (!running) {
             intervalId = setInterval( timer.count, 1000 );
