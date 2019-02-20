@@ -109,17 +109,20 @@ var game = {
         var $answer = $(this).attr("data-answer");
         
         if( $answer === game.answers[game.currQuestion] ) {
-            game.displayAnswer();
             score++;
 
             $( "#message" ).text( "Correct!" );
             $( "#message" ).css( "color", "black" );
             $( "#player-score").text( "Score: " + score );
+
+            game.displayAnswer();
         }
         else {
             $( "#message" ).text( "Incorrect." );
             $( "#message" ).css( "color", "black" );
         }
+
+        timer.timesUp( true );
     }
 };
 
@@ -134,7 +137,7 @@ var timer = {
         $( "#time-remaining" ).text( "Time Remaining: " + timer.remaining );
 
         if( timer.remaining === 0 ) {
-            timer.timesUp();
+            timer.timesUp( false );
         }
     },
 
@@ -168,15 +171,16 @@ var timer = {
     },
 
 
-    timesUp: function() {
+    timesUp: function( timeLeft ) {
         clearInterval( intervalId );
         running = false;
         timer.remaining = 10;
 
-        $( "#message" ).text( "Time's up!" );
-        $( "#message" ).css( "color", "black" );
+        if( !timeLeft ) {
+            $( "#message" ).text( "Time's up!" );
+            $( "#message" ).css( "color", "black" );
+        }
 
-        game.displayAnswer();
         setTimeout( game.nextQuestion, 10000 );
     },
 };
